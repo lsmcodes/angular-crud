@@ -7,7 +7,7 @@ import { Course } from '../models/Course';
   providedIn: 'root',
 })
 export class CoursesService {
-  private readonly API: string = 'http://localhost:8080/api/courses';
+  private readonly API: string = 'api/courses';
   private httpClient: HttpClient = inject(HttpClient);
 
   constructor() {}
