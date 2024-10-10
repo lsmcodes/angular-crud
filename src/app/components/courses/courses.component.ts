@@ -1,11 +1,13 @@
 import { CommonModule, NgIf } from '@angular/common';
 import { Component, inject } from '@angular/core';
 import { MatCardModule } from '@angular/material/card';
+import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { catchError, Observable, of } from 'rxjs';
 import { Course } from '../../models/Course';
 import { CoursesService } from '../../services/courses.service';
 import { CoursesListComponent } from '../courses-list/courses-list.component';
+import { ErrorDialogComponent } from '../error-dialog/error-dialog.component';
 
 @Component({
   selector: 'app-courses',
@@ -14,6 +16,7 @@ import { CoursesListComponent } from '../courses-list/courses-list.component';
     CommonModule,
     NgIf,
     MatCardModule,
+    MatDialogModule,
     MatProgressSpinnerModule,
     CoursesListComponent,
   ],
@@ -21,14 +24,20 @@ import { CoursesListComponent } from '../courses-list/courses-list.component';
   styleUrl: './courses.component.scss',
 })
 export class CoursesComponent {
-  private coursesService: CoursesService = inject(CoursesService);
   courses$: Observable<Course[]>;
+  private coursesService: CoursesService = inject(CoursesService);
+  private dialog: MatDialog = inject(MatDialog);
 
   constructor() {
     this.courses$ = this.coursesService.getCourses().pipe(
       catchError(() => {
+        this.onError('Something went wrong while loading the courses. Try again later.');
         return of([]);
       })
     );
+  }
+
+  private onError(errorMessage: string): void {
+    this.dialog.open(ErrorDialogComponent, { data: errorMessage });
   }
 }
