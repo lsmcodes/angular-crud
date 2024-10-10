@@ -2,9 +2,10 @@ import { CommonModule, NgIf } from '@angular/common';
 import { Component, inject } from '@angular/core';
 import { MatCardModule } from '@angular/material/card';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import { Course } from '../../models/Course';
 import { catchError, Observable, of } from 'rxjs';
+import { Course } from '../../models/Course';
 import { CoursesService } from '../../services/courses.service';
+import { CoursesListComponent } from '../courses-list/courses-list.component';
 
 @Component({
   selector: 'app-courses',
@@ -14,6 +15,7 @@ import { CoursesService } from '../../services/courses.service';
     NgIf,
     MatCardModule,
     MatProgressSpinnerModule,
+    CoursesListComponent,
   ],
   templateUrl: './courses.component.html',
   styleUrl: './courses.component.scss',
