@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
-import { first } from 'rxjs';
+import { first, Observable } from 'rxjs';
 import { Course } from '../models/Course';
 
 @Injectable({
@@ -12,7 +12,11 @@ export class CoursesService {
 
   constructor() {}
 
-  getCourses() {
+  getCourses(): Observable<Course[]> {
     return this.httpClient.get<Course[]>(this.API).pipe(first());
+  }
+
+  saveCourse(course: Partial<Course>): Observable<Course> {
+    return this.httpClient.post<Course>(this.API, course).pipe(first());
   }
 }

@@ -14,7 +14,7 @@
   <!--Actions Column-->
   <ng-container matColumnDef="actions">
     <mat-header-cell *matHeaderCellDef class="actions-column">
-      <button mat-flat-button>Add New</button>
+      <button mat-flat-button (click)="onAdd()">Add New</button>
     </mat-header-cell>
     <mat-cell *matCellDef="let element" class="actions-column">
       <button mat-icon-button aria-label="Edit course">
