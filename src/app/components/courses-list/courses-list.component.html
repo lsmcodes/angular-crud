@@ -2,13 +2,16 @@
   <!--Category Name-->
   <ng-container matColumnDef="name">
     <mat-header-cell *matHeaderCellDef>Name</mat-header-cell>
-    <mat-cell *matCellDef="let element">{{ element.name }}</mat-cell>
+    <mat-cell *matCellDef="let course">{{ course.name }}</mat-cell>
   </ng-container>
 
   <!--Category Column-->
   <ng-container matColumnDef="category">
     <mat-header-cell *matHeaderCellDef>Category</mat-header-cell>
-    <mat-cell *matCellDef="let element">{{ element.category }}</mat-cell>
+    <mat-cell *matCellDef="let course">
+      {{ course.category }}
+      <mat-icon>{{ course.category | category }}</mat-icon>
+    </mat-cell>
   </ng-container>
 
   <!--Actions Column-->
