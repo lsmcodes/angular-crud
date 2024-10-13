@@ -1,8 +1,7 @@
-import { Component, inject, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatTableModule } from '@angular/material/table';
-import { ActivatedRoute, Router } from '@angular/router';
 import { Course } from '../../models/Course';
 import { CategoryPipe } from '../../pipes/category.pipe';
 
@@ -15,12 +14,10 @@ import { CategoryPipe } from '../../pipes/category.pipe';
 })
 export class CoursesListComponent {
   @Input() courses: Course[] = [];
+  @Output() add: EventEmitter<any> = new EventEmitter(false);
   displayedColumns: string[] = ['name', 'category', 'actions'];
 
-  private route: ActivatedRoute = inject(ActivatedRoute);
-  private router: Router = inject(Router);
-
   onAdd(): void {
-    this.router.navigate(['new'], { relativeTo: this.route });
+    this.add.emit(true);
   }
 }

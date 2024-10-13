@@ -8,6 +8,7 @@ import { Course } from '../../models/Course';
 import { CoursesService } from '../../services/courses.service';
 import { CoursesListComponent } from '../courses-list/courses-list.component';
 import { ErrorDialogComponent } from '../error-dialog/error-dialog.component';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-courses',
@@ -27,6 +28,8 @@ export class CoursesComponent {
   courses$: Observable<Course[]>;
   private coursesService: CoursesService = inject(CoursesService);
   private dialog: MatDialog = inject(MatDialog);
+  private route: ActivatedRoute = inject(ActivatedRoute);
+  private router: Router = inject(Router);
 
   constructor() {
     this.courses$ = this.coursesService.getCourses().pipe(
@@ -39,5 +42,9 @@ export class CoursesComponent {
 
   private onError(errorMessage: string): void {
     this.dialog.open(ErrorDialogComponent, { data: errorMessage });
+  }
+
+  onAdd(): void {
+    this.router.navigate(['new'], { relativeTo: this.route });
   }
 }
