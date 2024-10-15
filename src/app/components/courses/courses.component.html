@@ -8,6 +8,7 @@
       *ngIf="courses$ | async as courses; else spinner"
       [courses]="courses"
       (add)="onAdd()"
+      (edit)="onEdit($event)"
     ></app-courses-list>
     <ng-template #spinner>
       <mat-spinner diameter="50"></mat-spinner>

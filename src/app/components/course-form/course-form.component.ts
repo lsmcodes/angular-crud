@@ -1,5 +1,9 @@
 import { Component, inject } from '@angular/core';
-import { FormGroup, NonNullableFormBuilder, ReactiveFormsModule } from '@angular/forms';
+import {
+  FormGroup,
+  NonNullableFormBuilder,
+  ReactiveFormsModule,
+} from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -8,6 +12,8 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { CoursesService } from '../../services/courses.service';
 import { Location } from '@angular/common';
+import { ActivatedRoute } from '@angular/router';
+import { Course } from '../../models/Course';
 
 @Component({
   selector: 'app-course-form',
@@ -25,15 +31,26 @@ import { Location } from '@angular/common';
   styleUrl: './course-form.component.scss',
 })
 export class CourseFormComponent {
+  private activatedRoute: ActivatedRoute = inject(ActivatedRoute);
   private coursesService: CoursesService = inject(CoursesService);
   private formBuilder: NonNullableFormBuilder = inject(NonNullableFormBuilder);
   private location: Location = inject(Location);
   private snackBar: MatSnackBar = inject(MatSnackBar);
 
   form: FormGroup = this.formBuilder.group({
+    _id: [''],
     name: [''],
     category: [''],
   });
+
+  constructor() {
+    const course: Course = this.activatedRoute.snapshot.data['course'];
+    this.form.setValue({
+      _id: course._id,
+      name: course.name,
+      category: course.category,
+    });
+  }
 
   onSubmit(): void {
     this.coursesService.saveCourse(this.form.value).subscribe({
