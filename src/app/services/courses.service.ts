@@ -36,4 +36,8 @@ export class CoursesService {
       .put<Course>(`${this.API}/${course._id}`, course)
       .pipe(first());
   }
+
+  deleteCourse(id: string): Observable<Object> {
+    return this.httpClient.delete(`${this.API}/${id}`).pipe(first());
+  }
 }
